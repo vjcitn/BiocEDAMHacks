@@ -1,0 +1,37 @@
+---
+title: Introducing biocViews
+---
+
+# Basic concepts
+
+## Introduction to biocViews
+
+"biocViews" is the name of a package in Bioconductor that performs many roles
+
+- it was initially proposed to emulate [CRAN task views](https://cran.r-project.org/web/views/), but
+did not achieve the levels of curation and narration present there
+- it was implemented as an instance of Bioconductor's "graph" class
+    - every vocabulary element is node in the biocViews graph
+    - "is a" conceptual relationships are expressed using directed edges
+
+Illustration using R:
+
+```{r lkbc1, message=FALSE}
+library(biocViews)
+library(graph)
+data(biocViewsVocab)
+biocViewsVocab
+head(nodes(biocViewsVocab),12)
+head(edges(biocViewsVocab),3)
+```
+
+## Quick view of EDAM in R
+
+The following has a one-time startup cost of introducing
+infrastructure for working with owlready2 (python) in R.
+```{r geted}
+library(ontoProc) # must use Bioc 3.20
+ed = setup_entities2("https://edamontology.org/EDAM_1.25.owl")
+head(ed$name, 12)
+onto_plot2(ed, names(ed$name[ed$children$format_1915]))
+```
